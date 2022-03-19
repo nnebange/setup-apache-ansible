@@ -1,0 +1,43 @@
+#play1 to install apache
+- name: configure apache on ubuntu intances
+  hosts: ubuntuclients
+  tasks:
+    - name: Update all packages to their latest version # apt update
+      apt: #module
+        name: "*"
+        state: latest
+    - name: Install apache httpd  (state=present is optional) #apt install apache2
+      apt:
+        name: apache2
+        state: latest
+    - name: Start service apache2, if not started #systemctl start apache2
+      ansible.builtin.service:
+        name: apache2
+        state: started
+    - name: Enable service apache2, and not touch the state # systemctl enable apache2
+      ansible.builtin.service:
+        name: apache2
+        enabled: yes
+    - name: Copy index file from controller to the clients
+      ansible.builtin.copy:
+        src: /home/ubuntu/index.html # copying file index.html from contoller
+        dest: /var/www/html/ #clients
+        #owner: foo
+        #group: foo
+        #mode: '0644'
+
+#play2 to install git
+- name: configure git on ubuntu intances # git is already installed in ubuntu server by defualt. This play will make no chnages since Ansible is idempotent
+  hosts: ubuntuclients
+  tasks:
+    - name: Install git #git is already install on ubuntu by deault so i do not expect any chanages Ansible is idempotent
+      apt:
+       name: git
+       state: present
+       update_cache: yes
+
+
+
+
+
+
