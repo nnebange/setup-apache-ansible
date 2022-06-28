@@ -1,8 +1,8 @@
 #play1 to install apache
-- name: configure apache on ubuntu intances
+- name: configure apache on ubuntu intances 
   hosts: ubuntuclients
   tasks:
-    - name: Update all packages to their latest version # apt update
+    - name: Update all packages to their latest versions # apt update
       apt: #module
         name: "*"
         state: latest
